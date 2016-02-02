@@ -7,3 +7,6 @@
 6) sudo rm -rf cloudbees_puppet_install
 7) edit node defninition in /etc/puppet/manifest.conf 
 8) sudo puppet apply --verbose --debug --modulepath=/etc/puppet/modules /etc/puppet/manifest.conf
+
+Puppet Lab's Beginner's Guide to Modules
+https://docs.puppetlabs.com/guides/module_guides/bgtm.html
