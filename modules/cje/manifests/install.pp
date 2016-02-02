@@ -1,4 +1,4 @@
-# == Class: cje
+# == Class: cje::install
 #
 # Full description of class cje here.
 #
