@@ -51,7 +51,7 @@ class cjoc::install inherits cjoc {
    }
 
   package {'jenkins-oc':
-     ensure   => "{$install_version}",
+     ensure   => "${install_version}",
      require  => Yumrepo["jenkins-oc"]
   }
 

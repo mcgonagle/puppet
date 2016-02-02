@@ -52,7 +52,7 @@ class java::oracle inherits java {
     # Installing JDK
     exec { "install-oracle-jdk":
 	command => "/usr/bin/tar xvfz ${oracle_java_installer}",
-	cwd => ${oracle_dependencies_dir}, 
+	cwd => "${oracle_dependencies_dir}", 
         creates  => "${oracle_dependencies_dir}/${oracle_creates_dir}",
 	timeout => 0,
 	require => Exec["oracle-jdk-download"],
@@ -62,7 +62,7 @@ class java::oracle inherits java {
     # setting up alternatives 
     exec { "linking-alternatives-java":
 	command => "/usr/sbin/alternatives --install /usr/bin/java java ${oracle_dependencies_dir}/${oracle_creates_dir}/bin/java 1",
-	cwd => "${oracle_dependencies_dir}, 
+	cwd => "${oracle_dependencies_dir}", 
         unless  => "/usr/bin/test $(/usr/bin/readlink -e /etc/alternatives/java) = ${oracle_dependencies_dir}/${oracle_creates_dir}/bin/java",
 	timeout => 0,
 	require => Exec["install-oracle-jdk"],
@@ -71,7 +71,7 @@ class java::oracle inherits java {
 
     exec { "linking-alternatives-jar":
 	command => "/usr/sbin/alternatives --install /usr/bin/jar jar ${oracle_dependencies_dir}/${oracle_creates_dir}/bin/jar 1",
-	cwd => "${oracle_dependencies_dir}, 
+	cwd => "${oracle_dependencies_dir}", 
         unless  => "/usr/bin/test $(/usr/bin/readlink -e /etc/alternatives/jar) = ${oracle_dependencies_dir}/${oracle_creates_dir}/bin/jar",
 	timeout => 0,
 	require => Exec["install-oracle-jdk"],
