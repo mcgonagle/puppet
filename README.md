@@ -5,7 +5,7 @@
 4. sudo git clone https://github.com/mcgonagle/cloudbees_puppet_install.git
 5. sudo mv cloudbees_puppet_install/* .
 6. sudo rm -rf cloudbees_puppet_install
-7. edit node defninition in /etc/puppet/manifest.conf 
+7. edit node defninition in /etc/puppet/manifest.conf to match hostname of host
 8. sudo puppet apply --verbose --debug --modulepath=/etc/puppet/modules /etc/puppet/manifest.conf
 
 ***
