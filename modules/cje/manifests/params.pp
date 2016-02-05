@@ -42,4 +42,6 @@ class cje::params {
     $service_ensure = 'running'
     $service_hasstatus = 'true'
     $service_hasrestart = 'true'
+    $libdir = '/usr/lib/jenkins'
+
 }

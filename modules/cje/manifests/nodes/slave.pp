@@ -1,6 +1,6 @@
-# == Class: cje
+# == Class: cje::nodes::slave
 #
-# Full description of class cje here.
+# Full description of class cje::nodes::slave here.
 #
 # === Parameters
 #
@@ -35,25 +35,26 @@
 #
 # Copyright 2016 Your name here, unless otherwise noted.
 #
-class cje (
-  $install_version = $cje::params::install_version,
-  $install_baseurl = $cje::params::install_baseurl,
-  $install_gpgkey = $cje::params::install_gpgkey,
-  $service_enable = $cje::params::service_enable,
-  $service_ensure = $cje::params::service_ensure,
-  $service_hasstatus = $cje::params::service_hasstatus,
-  $service_hasrestart = $cje::params::service_hasrestart,
-  $libdir             = $cje::params::libdir) inherits cje::params {
-
+define cje::nodes::slave ($remotefs, $host, $port, $credentials) {
   # for debug output on the puppet master
-  notice("Running inside cje ")
+  notice("Running inside cje::nodes::slave ")
 
   # for debug output on the puppet client
-  notify {"Running inside cje ": }
-  class { cje::install: }
-  class { cje::config: }
-  class { cje::service: }
+  notify {"Running inside cje::nodes::slave ": }
 
-  Class['cje::install'] -> Class['cje::config'] -> Class['cje::service']
+  file { "/var/lib/jenkins/nodes/${title}":
+	ensure => directory,
+    	owner  => 'jenkins',
+    	group  => 'jenkins',
+    	mode   => '0755',
+  }
 
+  file { "/var/lib/jenkins/nodes/$title/config.xml":
+	ensure => file,
+	content => template('cje/nodes/config_xml.erb'),
+    	owner  => 'jenkins',
+    	group  => 'jenkins',
+    	mode   => '0644',
+	require => File["/var/lib/jenkins/nodes/${title}"],
+  }
 }

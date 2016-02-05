@@ -1,6 +1,6 @@
-# == Class: cje
+# == Class: cje::cli::reload-configuration
 #
-# Full description of class cje here.
+# Full description of class cje::cli::reload-configuration here.
 #
 # === Parameters
 #
@@ -35,25 +35,21 @@
 #
 # Copyright 2016 Your name here, unless otherwise noted.
 #
-class cje (
-  $install_version = $cje::params::install_version,
-  $install_baseurl = $cje::params::install_baseurl,
-  $install_gpgkey = $cje::params::install_gpgkey,
-  $service_enable = $cje::params::service_enable,
-  $service_ensure = $cje::params::service_ensure,
-  $service_hasstatus = $cje::params::service_hasstatus,
-  $service_hasrestart = $cje::params::service_hasrestart,
-  $libdir             = $cje::params::libdir) inherits cje::params {
-
+class cje::cli::reload-configuration inherits cje::cli {
   # for debug output on the puppet master
-  notice("Running inside cje ")
+  notice("Running inside cje::cli::safe-restart ")
 
   # for debug output on the puppet client
-  notify {"Running inside cje ": }
-  class { cje::install: }
-  class { cje::config: }
-  class { cje::service: }
+  notify {"Running inside cje::cli::safe-restart ": }
 
-  Class['cje::install'] -> Class['cje::config'] -> Class['cje::service']
+  include ::cje
+  include cje::cli
+
+  exec { 'reload-configuration-jenkins' :
+    command => "java -jar ${jar} -s http://localhost:${port} reload-configuration",
+    path    => ['/bin', '/usr/bin'],
+    cwd     => '/tmp',
+    logoutput => true,
+  }
 
 }

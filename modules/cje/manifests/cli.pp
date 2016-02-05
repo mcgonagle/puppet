@@ -1,6 +1,6 @@
-# == Class: cje
+# == Class: cje::cli
 #
-# Full description of class cje here.
+# Full description of class cje::cli here.
 #
 # === Parameters
 #
@@ -35,25 +35,32 @@
 #
 # Copyright 2016 Your name here, unless otherwise noted.
 #
-class cje (
-  $install_version = $cje::params::install_version,
-  $install_baseurl = $cje::params::install_baseurl,
-  $install_gpgkey = $cje::params::install_gpgkey,
-  $service_enable = $cje::params::service_enable,
-  $service_ensure = $cje::params::service_ensure,
-  $service_hasstatus = $cje::params::service_hasstatus,
-  $service_hasrestart = $cje::params::service_hasrestart,
-  $libdir             = $cje::params::libdir) inherits cje::params {
-
+class cje::cli {
   # for debug output on the puppet master
-  notice("Running inside cje ")
+  notice("Running inside cje::cli ")
 
   # for debug output on the puppet client
-  notify {"Running inside cje ": }
-  class { cje::install: }
-  class { cje::config: }
-  class { cje::service: }
+  notify {"Running inside cje::cli ": }
 
-  Class['cje::install'] -> Class['cje::config'] -> Class['cje::service']
+  include ::cje
+
+  $jar = "${cje::libdir}/jenkins-cli.jar"
+  $extract_jar = "jar -xf ${cje::libdir}/jenkins.war WEB-INF/jenkins-cli.jar"
+  $move_jar = "mv WEB-INF/jenkins-cli.jar ${jar}"
+  $remove_dir = 'rm -rf WEB-INF'
+  $port = "8080"
+  
+
+  exec { 'jenkins-cli' :
+    command => "${extract_jar} && ${move_jar} && ${remove_dir}",
+    path    => ['/bin', '/usr/bin'],
+    cwd     => '/tmp',
+    creates => $jar,
+    require => Class['cje::service'],
+  }
+  file { $jar:
+    ensure  => file,
+    require => Exec['jenkins-cli'],
+  }
 
 }

@@ -1,6 +1,6 @@
-# == Class: cje
+# == Class: cje::plugins::install
 #
-# Full description of class cje here.
+# Full description of class cje::plugins::install here.
 #
 # === Parameters
 #
@@ -35,25 +35,18 @@
 #
 # Copyright 2016 Your name here, unless otherwise noted.
 #
-class cje (
-  $install_version = $cje::params::install_version,
-  $install_baseurl = $cje::params::install_baseurl,
-  $install_gpgkey = $cje::params::install_gpgkey,
-  $service_enable = $cje::params::service_enable,
-  $service_ensure = $cje::params::service_ensure,
-  $service_hasstatus = $cje::params::service_hasstatus,
-  $service_hasrestart = $cje::params::service_hasrestart,
-  $libdir             = $cje::params::libdir) inherits cje::params {
-
+define cje::plugins::install ($version) {
   # for debug output on the puppet master
-  notice("Running inside cje ")
+  notice("Running inside cje::plugins::install ${title} ")
 
   # for debug output on the puppet client
-  notify {"Running inside cje ": }
-  class { cje::install: }
-  class { cje::config: }
-  class { cje::service: }
+  notify {"Running inside cje::plugins::install ${title} ": }
 
-  Class['cje::install'] -> Class['cje::config'] -> Class['cje::service']
 
+  exec { "install-plugin-${title}" :
+    command => "curl -X POST -d '<jenkins><install plugin=\"${title}@${version}\" /></jenkins>' --header 'Content-Type: text/xml' http://localhost:8080/pluginManager/installNecessaryPlugins",
+    path    => ['/bin', '/usr/bin'],
+    cwd     => '/tmp',
+    logoutput => true,
+  }
 }
