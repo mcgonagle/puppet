@@ -36,8 +36,8 @@
 #
 class cje::params {
     $install_version = 'installed' 
-    $install_baseurl = "http://nectar-downloads.cloudbees.com/jenkins-enterprise/1.625/rpm"
-    $install_gpgkey = "http://nectar-downloads.cloudbees.com/nectar/rpm/jenkins-ci.org.key"
+    $install_baseurl = "http://nectar-downloads.cloudbees.com/jenkins-enterprise/1.642/rpm"
+    $install_gpgkey = "http://nectar-downloads.cloudbees.com/jenkins-enterprise/1.642/rpm/cloudbees.com.key"
     $service_enable = 'true'
     $service_ensure = 'running'
     $service_hasstatus = 'true'
