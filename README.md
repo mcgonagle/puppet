@@ -1,4 +1,4 @@
-# CloudBees Puppet Install
+## CloudBees Puppet Install
 1. sudo yum install -y puppet git
 2. cd /etc/
 3. sudo rm -rf puppet
