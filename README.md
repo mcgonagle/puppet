@@ -1,4 +1,4 @@
-## CloudBees Puppet Install
+# CloudBees Puppet Install
 1. sudo yum install -y puppet git
 2. cd /etc/
 3. sudo rm -rf puppet
@@ -13,6 +13,3 @@ Puppet Lab's Beginner's Guide to Modules
 
 https://docs.puppetlabs.com/guides/module_guides/bgtm.html
 
-***
-##
-##
