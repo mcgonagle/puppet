@@ -37,7 +37,7 @@
 class cjoc::params {
     $install_version = 'installed'
     $install_baseurl = "http://nectar-downloads.cloudbees.com/jenkins-operations-center/1.625/rpm"
-    $install_gpgkey = "http://downloads.cloudbees.com/cjoc/latest/rpm/jenkins-ci.org.key"
+    $install_gpgkey = "http://nectar-downloads.cloudbees.com/jenkins-operations-center/1.625/rpm/cloudbees.com.key"
     $service_enable = 'true'
     $service_ensure = 'running'
     $service_hasstatus = 'true'
